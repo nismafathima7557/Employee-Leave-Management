@@ -17,7 +17,7 @@ const connectDB = async () => {
     console.log(error);
   }
 };
-console.log("sdfdsf");
+
 
 
 const app = express();
