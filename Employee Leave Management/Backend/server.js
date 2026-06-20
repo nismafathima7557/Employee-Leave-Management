@@ -24,7 +24,7 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 app.use(
   cors({
-    origin: "https://employee-leave-management-bay.vercel.app",
+    origin: "https://employee-leave-management-tau.vercel.app",
     credentials: true,
   }),
 );
