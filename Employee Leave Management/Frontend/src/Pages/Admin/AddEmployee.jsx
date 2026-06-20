@@ -14,7 +14,7 @@ const AddEmployee = () => {
     department: "",
     joinDate: "",
     salary: "",
-    image: null,
+    image: "",
   });
 
   const handleChange = (e) => {
@@ -24,54 +24,40 @@ const AddEmployee = () => {
     });
   };
 
-
-
   const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  e.preventDefault();
+    try {
+      const employeeData = new FormData();
 
-  try {
+      employeeData.append("name", formData.name);
+      employeeData.append("email", formData.email);
+      employeeData.append("password", formData.password);
+      employeeData.append("phone", formData.phone);
+      employeeData.append("department", formData.department);
+      employeeData.append("joinDate", formData.joinDate);
+      employeeData.append("salary", formData.salary);
 
-    const employeeData = new FormData();
+      employeeData.append("image", formData.image);
 
-    employeeData.append("name", formData.name);
-    employeeData.append("email", formData.email);
-    employeeData.append("password", formData.password);
-    employeeData.append("phone", formData.phone);
-    employeeData.append("department", formData.department);
-    employeeData.append("joinDate", formData.joinDate);
-    employeeData.append("salary", formData.salary);
+      const response = await axios.post(
+        "https://employee-leave-management-6clu.onrender.com/api/employees/add",
+        employeeData,
+      );
 
-    employeeData.append(
-      "image",
-      formData.image
-    );
+      if (response.data.success) {
+        alert("Employee added successfully");
 
-    const response = await axios.post(
-      "https://employee-leave-management-6clu.onrender.com/api/employees/add", employeeData
-    );
+        navigate("/admin/admin-employee");
+      } else {
+        alert(response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
 
-    if (response.data.success) {
-
-      alert("Employee added successfully");
-
-      navigate("/admin/admin-employee");
-
-    } else {
-
-      alert(response.data.message);
-
+      alert("Something went wrong");
     }
-
-  } catch (error) {
-
-    console.log(error);
-
-    alert("Something went wrong");
-
-  }
-
-};
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-start py-10">
@@ -92,15 +78,17 @@ const AddEmployee = () => {
             <label className="mb-2 font-medium text-gray-700">
               Employee Image
             </label>
-
             <input
               type="file"
               name="image"
+              accept="image/png,image/jpeg,image/webp,application/pdf"
               className="border border-gray-300 rounded-lg p-3"
               onChange={(e) => {
+                const file = e.target.files[0];
+
                 setFormData({
                   ...formData,
-                  image: e.target.files[0],
+                  image: file,
                 });
               }}
             />
