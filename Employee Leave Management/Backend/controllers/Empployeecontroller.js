@@ -7,8 +7,8 @@ export const addEmployee = async (req, res) => {
 
 
         const file = req.file 
-        if(file) {
-            return res.status(200).json(file)
+        if(!file) {
+            return res.status(400).json({message : "file not get " ,file})
         }
         const employee = await Employee.create({
             ...req.body,
