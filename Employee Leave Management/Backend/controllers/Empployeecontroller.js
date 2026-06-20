@@ -5,6 +5,11 @@ export const addEmployee = async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10)
 
+
+        const file = req.file 
+        if(file) {
+            return res.status(200).json(file)
+        }
         const employee = await Employee.create({
             ...req.body,
             password: hashedPassword,
