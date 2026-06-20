@@ -27,7 +27,7 @@ app.use(
   }),
 );
 
-console.log("dsdf");
+
 
 
 app.use(express.json());
