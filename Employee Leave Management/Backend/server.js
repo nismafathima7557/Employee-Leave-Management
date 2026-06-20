@@ -17,6 +17,8 @@ const connectDB = async () => {
     console.log(error);
   }
 };
+console.log("sdfdsf");
+
 
 const app = express();
 const PORT = process.env.PORT || 4000;
